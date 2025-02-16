@@ -10,7 +10,13 @@ const Tab = createBottomTabNavigator();
 
 export default function TabBarScreen() {
   return (
-    <Tab.Navigator screenOptions={{ headerShown: false }}>
+    <Tab.Navigator
+      screenOptions={{
+        headerShown: false,
+        tabBarActiveTintColor: "black",
+        tabBarActiveBackgroundColor: "#889E73",
+      }}
+    >
       <Tab.Screen
         name="IndexScreen"
         component={IndexSceen}
@@ -19,12 +25,16 @@ export default function TabBarScreen() {
           tabBarIcon: () => <AntDesign name="home" size={24} color="black" />,
         }}
       />
+
       <Tab.Screen
         name="ChartScreen"
         component={ChartScreen}
-        options={{ title: "Grafik" ,tabBarIcon:()=>(
-          <AntDesign name="barschart" size={24} color="black" />
-        )}}
+        options={{
+          title: "Grafik",
+          tabBarIcon: () => (
+            <AntDesign name="barschart" size={24} color="black" />
+          ),
+        }}
       />
     </Tab.Navigator>
   );

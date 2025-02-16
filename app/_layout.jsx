@@ -6,7 +6,8 @@ import {
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import LoginScreen from "../screens/LoginScreen";
 import SignUpScreen from "../screens/SignUpScreen";
-import TabBarScreen from "../screens/TabBarScreen"
+import TabBarScreen from "../screens/TabBarScreen";
+
 
 const Stack = createNativeStackNavigator();
 
@@ -25,11 +26,12 @@ export default function RootLayout() {
             component={SignUpScreen}
             options={{ headerShown: false }}
           />
-           <Stack.Screen
+          <Stack.Screen
             name="TabBarScreen"
             component={TabBarScreen}
             options={{ headerShown: false }}
           />
+
         </Stack.Navigator>
       </NavigationContainer>
     </NavigationIndependentTree>
