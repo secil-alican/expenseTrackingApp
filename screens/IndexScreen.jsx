@@ -16,7 +16,7 @@ import { Picker } from "@react-native-picker/picker";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 
-export default function IndexScreen() {
+export default function IndexScreen({ resetButton }) {
   const [money, setMoney] = useState("");
   const [isModal, setIsModal] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState();
@@ -36,9 +36,14 @@ export default function IndexScreen() {
       };
 
       setExpenses((prevExpenses) => {
-        const updatedExpenses = [newExpense, ...prevExpenses];
-        storeData(updatedExpenses);
-        return updatedExpenses;
+        if (newExpense.category !== prevExpenses[0]?.category) {
+          const updatedExpenses = [newExpense, ...prevExpenses];
+          storeData(updatedExpenses);
+          return updatedExpenses;
+        } else {
+          alert("Bu Kategori Seçili !");
+          return prevExpenses;
+        }
       });
 
       console.log(selectedCategory);
@@ -109,7 +114,6 @@ export default function IndexScreen() {
     }
   };
 
-
   useEffect(() => {
     const loadMoney = async () => {
       const data = await getMoney();
@@ -118,12 +122,11 @@ export default function IndexScreen() {
     loadMoney();
   }, []);
 
-
   useEffect(() => {
     if (money) {
       storeMoney(money);
     }
-  }, [money]);
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -216,7 +219,7 @@ export default function IndexScreen() {
               onPress={() => addExpense()}
               style={({ pressed }) => pressed && styles.pressed}
             >
-              <View style={styles.closeButton}>
+              <View style={styles.plusButton}>
                 <Text
                   style={{ textAlign: "center", color: "#fff", fontSize: 15 }}
                 >
@@ -228,7 +231,7 @@ export default function IndexScreen() {
               onPress={() => closeModal()}
               style={({ pressed }) => pressed && styles.pressed}
             >
-              <View style={styles.plusButton}>
+              <View style={styles.closeButton}>
                 <Text
                   style={{ textAlign: "center", color: "#fff", fontSize: 15 }}
                 >

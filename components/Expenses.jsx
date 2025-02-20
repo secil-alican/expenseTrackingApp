@@ -3,10 +3,6 @@ import React, { useState, useEffect } from "react";
 import AntDesign from "@expo/vector-icons/AntDesign";
 
 export default function Expenses({ expenses, money, deleteExpense }) {
-  const sum = (expenses || []).reduce(
-    (acc, expense) => acc + expense.expenseMoney,
-    0
-  );
 
   return (
     <View style={{ flex: 1 }}>
@@ -27,10 +23,7 @@ export default function Expenses({ expenses, money, deleteExpense }) {
           </View>
         )}
       />
-      <View style={styles.currentMoneyView}>
-        <Text style={{ fontSize: 15 }}>KALAN PARA</Text>
-        <Text style={{ fontSize: 20 }}>{money - sum} ₺</Text>
-      </View>
+
     </View>
   );
 }
@@ -57,18 +50,5 @@ const styles = StyleSheet.create({
   pressed: {
     opacity: 0.5,
   },
-  currentMoneyView: {
-    borderRadius: 10,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 20,
-    marginVertical: 10,
-    backgroundColor: "#F4D793",
-    bottom: 0,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.2,
-    shadowRadius: 6,
-    elevation: 5,
-  },
+
 });
