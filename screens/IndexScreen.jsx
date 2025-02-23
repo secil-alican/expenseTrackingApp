@@ -7,16 +7,15 @@ import {
   Modal,
   Button,
   Alert,
+  ImageBackground,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import Expenses from "../components/Expenses";
 import Fontisto from "@expo/vector-icons/Fontisto";
-import { useNavigation } from "@react-navigation/native";
 import { Picker } from "@react-native-picker/picker";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 
-export default function IndexScreen({ resetButton }) {
+export default function IndexScreen() {
   const [money, setMoney] = useState("");
   const [isModal, setIsModal] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState();
@@ -128,9 +127,22 @@ export default function IndexScreen({ resetButton }) {
     }
   }, []);
 
+
+
   return (
     <View style={styles.container}>
-      <View style={styles.money}>
+      <ImageBackground
+        source={require("../assets/images/card.png")}
+        style={styles.cardImage}
+        imageStyle={{
+          width: 370,
+          height: 500,
+          zIndex: -1,
+          marginTop: -80,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
         <Text style={{ fontSize: 20 }}>AYLIK GELİR</Text>
         <View style={styles.inputMoney}>
           <TextInput
@@ -143,7 +155,7 @@ export default function IndexScreen({ resetButton }) {
           />
           <Text style={{ fontSize: 25 }}>₺</Text>
         </View>
-      </View>
+      </ImageBackground>
       <View style={styles.expensesView}>
         <View style={styles.expensesAndIcon}>
           <Text style={styles.expensesTitle}>HARCAMALAR</Text>
@@ -277,19 +289,13 @@ const styles = StyleSheet.create({
     color: "#333",
   },
   textInput: {
-    borderWidth: 2,
-    borderColor: "#A94A4A",
-    borderRadius: 10,
-    paddingVertical: 12,
-    paddingHorizontal: 15,
+    borderBottomWidth: 1,
     fontSize: 18,
-    marginVertical: 20,
   },
   inputMoney: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    width: "100%",
     gap: 10,
   },
   currencyText: {
@@ -333,5 +339,12 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     textAlign: "center",
     marginVertical: 20,
+  },
+  cardImage: {
+    justifyContent: "center",
+    alignItems: "center",
+    height: 200,
+    marginTop: 10,
+    marginBottom: 100,
   },
 });
