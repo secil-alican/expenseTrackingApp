@@ -22,7 +22,7 @@ Expense Tracking App, kullanıcının aylık gelirini girmesine, farklı harcama
 
 
 <div style="display:flex; gap:20">
-<img src="assets/images/1.png"  width="300" height="300">
-<img src="assets/images/2.png"  width="300" height="300">
-<img src="assets/images/3.png"  width="300" height="300">
+<img src="assets/images/1.png"  width="200" height="300">
+<img src="assets/images/2.png"  width="200" height="300">
+<img src="assets/images/3.png"  width="200" height="300">
 </div>
