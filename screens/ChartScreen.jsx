@@ -10,6 +10,7 @@ import Animated, {
   useAnimatedProps,
   withTiming,
 } from "react-native-reanimated";
+import AntDesign from "@expo/vector-icons/AntDesign";
 
 const AnimatedPath = Animated.createAnimatedComponent(Path);
 
@@ -92,7 +93,7 @@ export default function ChartScreen() {
 
   const getMoney = async () => {
     try {
-      const value = await AsyncStorage.getItem("money");
+      const value = await AsyncStorage.getItem("Money");
       return value !== null ? JSON.parse(value) : "0";
     } catch (e) {
       console.log(e);
@@ -106,42 +107,29 @@ export default function ChartScreen() {
       setMoney(data);
     };
     loadMoney();
-  }, []);
-
-
+  }, [money]);
 
   return (
     <ScrollView style={{ flex: 1 }}>
       <View style={styles.container}>
         <View style={styles.progressContainer}>
-          <Text style={styles.remainingMoneyText}>
-            Kalan Para: <Text style={styles.moneyValue}>{money - sum} ₺</Text>
-          </Text>
-          <Svg width={200} height={120} viewBox="0 0 200 100">
-            <Circle
-              cx="100"
-              cy="100"
-              r="80"
-              stroke="#E0E0E0"
-              strokeWidth="25"
-              fill="none"
-              strokeDasharray="10,10"
-            />
-            <AnimatedPath
-              stroke="#4CAF50"
-              strokeWidth="25"
-              fill="none"
-              strokeDasharray={Math.PI * 80}
-              animatedProps={useAnimatedProps(() => ({
-                strokeDashoffset: Math.PI * 80 * (1 - animatedProgress.value),
-              }))}
-              d="M 20,100 A 80,80 0 1,1 180,100"
-            />
-          </Svg>
-          <Text style={styles.progressText}>
-            {((progress || 0) * 100).toFixed(0)}%
-          </Text>
+          <View style={styles.moneyRemainingContainer}>
+            <Text style={styles.MoneyText}>Kalan Para</Text>
+            <View style={styles.iconValue}>
+              <AntDesign name="pluscircle" size={24} color="#CB9DF0" />
+              <Text style={styles.MoneyTextValue}>{money - sum} ₺</Text>
+            </View>
+          </View>
+
+          <View style={styles.moneyExpensesContainer}>
+            <Text style={styles.MoneyText}>Toplam Harcama</Text>
+            <View style={styles.iconValue}>
+              <AntDesign name="minuscircle" size={24} color="#F29F58" />
+              <Text style={styles.MoneyTextValue}>{sum} ₺</Text>
+            </View>
+          </View>
         </View>
+
         <View style={{ justifyContent: "center", alignItems: "center" }}>
           <PieChart
             data={chartData}
@@ -162,19 +150,9 @@ export default function ChartScreen() {
                 style={[styles.colorBox, { backgroundColor: item.color }]}
               />
               <Text>{item.name}</Text>
-              <Text>{item.population} ₺</Text>
+              <Text style={{ color: "#A94A4A" }}>{item.population} ₺</Text>
             </View>
           ))}
-        </View>
-        <View style={styles.resetView}>
-          <Pressable
-            style={({ pressed }) => pressed && styles.pressed}
-
-          >
-            <View style={styles.resetButton}>
-              <Text style={{ fontSize: 15 }}>Takibi Sıfırla</Text>
-            </View>
-          </Pressable>
         </View>
       </View>
     </ScrollView>
@@ -198,6 +176,7 @@ const styles = StyleSheet.create({
   container: {
     marginHorizontal: 20,
     marginVertical: 20,
+
   },
 
   pressed: {
@@ -226,7 +205,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   legendContainer: {
-    marginVertical: 50,
+    marginVertical: 70,
     backgroundColor: "#fff",
     borderRadius: 10,
     shadowColor: "#000",
@@ -245,31 +224,55 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   progressContainer: {
-    marginVertical: 20,
-    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 10,
+    gap: 10,
+  },
+  moneyRemainingContainer: {
     padding: 20,
-    borderRadius: 10,
-    backgroundColor: "#F4F4F4",
-    borderColor: "#E0E0E0",
+    marginVertical: 30,
     borderWidth: 1,
+    borderRadius: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#F0C1E1",
+    borderColor: "#F0C1E1",
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.2,
     shadowRadius: 6,
     elevation: 5,
+    paddingHorizontal: 35,
   },
-  remainingMoneyText: {
+  MoneyTextValue: {
+    textAlign: "center",
     fontSize: 18,
-    fontWeight: "bold",
-    color: "#333",
-    marginBottom: 10,
   },
-  moneyValue: {
-    fontWeight: "bold",
+  MoneyText: {
+    fontSize: 20,
+    fontWeight: "500",
   },
-  progressText: {
-    fontSize: 24,
-    fontWeight: "bold",
+  iconValue: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 10,
     marginTop: 10,
+  },
+  moneyExpensesContainer: {
+    padding: 20,
+    marginVertical: 30,
+    borderWidth: 1,
+    borderRadius: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#FDDBBB",
+    borderColor: "#FDDBBB",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 6,
+    elevation: 5,
   },
 });

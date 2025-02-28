@@ -97,7 +97,7 @@ export default function IndexScreen() {
 
   const storeMoney = async (money) => {
     try {
-      await AsyncStorage.setItem("money", JSON.stringify(money));
+      await AsyncStorage.setItem("Money", JSON.stringify(money));
     } catch (e) {
       console.log(e);
     }
@@ -105,8 +105,8 @@ export default function IndexScreen() {
 
   const getMoney = async () => {
     try {
-      const value = await AsyncStorage.getItem("money");
-      return value !== null ? JSON.parse(value) : "0";
+      const value = await AsyncStorage.getItem("Money");
+      return value !== null ? JSON.parse(value) : 0;
     } catch (e) {
       console.log(e);
       return "0";
@@ -125,9 +125,7 @@ export default function IndexScreen() {
     if (money) {
       storeMoney(money);
     }
-  }, []);
-
-
+  }, [money]);
 
   return (
     <View style={styles.container}>
@@ -151,7 +149,6 @@ export default function IndexScreen() {
             value={money}
             onChangeText={(value) => setMoney(value)}
             placeholder="Gelirinizi Girin"
-            placeholderTextColor="#8e8e8e"
           />
           <Text style={{ fontSize: 25 }}>₺</Text>
         </View>
@@ -220,11 +217,11 @@ export default function IndexScreen() {
             <View>
               <TextInput
                 placeholder="Harcama Miktarını Yazın"
-                style={styles.textInput}
+                style={styles.expenseTextInput}
                 keyboardType="numeric"
                 value={expenseMoney}
                 onChangeText={(value) => setExpenseMoney(value)}
-                placeholderTextColor="#8e8e8e"
+                placeholderTextColor="black"
               />
             </View>
             <Pressable
@@ -346,5 +343,12 @@ const styles = StyleSheet.create({
     height: 200,
     marginTop: 10,
     marginBottom: 100,
+  },
+  expenseTextInput: {
+    borderWidth: 1,
+    borderRadius: 10,
+    marginBottom: 20,
+    padding: 20,
+    borderColor: "#ccc",
   },
 });
